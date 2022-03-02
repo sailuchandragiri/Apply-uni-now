@@ -7,6 +7,7 @@ import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios'
 import DateDrop from './DateDrop';
+import ContactDrop from './ContactDrop';
 
 
 function Login() {
@@ -259,7 +260,7 @@ function Login() {
                     </div>
               </div>
               <hr className="mt-4 mb-4 w-98"/>  
-              <div className=" w-94 h-24 rounded-2xl ml-2 pt-6  border-2 border-neutral-500 bg-leadsback mb-4 flex-row flex ...">
+              <div className=" w-94 h-18 pb-5 rounded-2xl ml-2 pt-6  border-2 border-neutral-500 bg-leadsback mb-4 flex-row flex ...">
                   <div className="h-12 w-40 ml-9 rounded-xl bg-leadsearch  flex ...">
                       <div className="h-full pt-2 pl-2 pb-2 w-28 ">
                           <div className="h-1/2 w-full  text-xs  pl-3 text-gray-500">Date Range</div>
@@ -269,16 +270,8 @@ function Login() {
                           <img src="Calender.png" alt="calender" className="ml-3 mt-4" />
                            </div>
                   </div>
-                  <div className="h-12 w-40 ml-2 rounded-xl bg-leadsearch flex ...">
-                    <div className="h-full pt-2 pl-2 pb-2 w-28 ">
-                          <div className="h-1/2 w-full  text-xs  pl-3 text-gray-500">Status</div>
-                          <div className="h-1/2 w-full text-white text-sm  pl-3 ">All</div>
-                      </div>
-                      <div className="h-full w-11">
-                      {/* <Calendar onChange={onChange} value={value} /> */}
-                          <img src="Calender.png" alt="calender" className="ml-3 mt-4" />
-                          
-                    </div>
+                  <div className=" w-40 ml-2 rounded-xl mr-3 bg-leadsearch flex ...">
+                     <ContactDrop/> 
                   </div>
                   <div className="h-12 w-80 ml-2 mr-20 rounded-xl bg-leadsearch flex ..." >
                       <img src="Search.png" alt="searchicon" className="pt-4 pl-4 pb-4"/>
