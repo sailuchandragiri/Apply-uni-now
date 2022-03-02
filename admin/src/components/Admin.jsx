@@ -166,9 +166,19 @@ function Login() {
                 <div className="h-full w-24 ml-2  pt-5 text-white text-xs">{data.destination}</div>
                 <div className="h-full w-24 ml-2  pt-5 text-white text-xs">{data.industry}</div>
                 <div className="h-full w-20 ml-2  pt-5 text-white text-xs">{data.intake}</div>
-                <div className="h-full w-24 ml-2  pt-3 ">
+                {data.is_contacted  ? (
+                  <div className="h-full w-24 ml-2  pt-3 ">
                     <img src="contacted.png" alt="contacted"/>
-                </div>
+                </div> 
+                ) : (
+                  <div className="h-full w-24 ml-2  pt-3 ">
+                    <img src="not_contacted.png" alt="contacted"/>
+                </div> 
+                )
+       }
+                {/* <div className="h-full w-24 ml-2  pt-3 ">
+                    <img src="contacted.png" alt="contacted"/>
+                </div> */}
                 <div className="h-full w-14 ml-8  pt-5">
                     <img src="Peop.png" alt="activate"/>
                 </div>
