@@ -6,6 +6,7 @@ import ReactPaginate from "react-paginate";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import axios from 'axios'
+import DateDrop from './DateDrop';
 
 
 function Login() {
@@ -218,14 +219,9 @@ function Login() {
                   <div className="w-60 h-full mr-96 ml-2">
                       <img src="Leads Analytics.png" alt="lead name" className="mt-6"/>
                   </div>
-                  <div className="w-52 h-full ml-72 rounded-xl pb-2 bg-today  flex ...">
-                      <div className="h-full w-36  flex-col   flex ...">
-                          <div className="h-1/2 w-full text-xs pt-3 text-gray-500 ml-7">Date Range </div>
-                          <div className="h-1/2 w-full  text-white text-lg ml-7">Today</div>
-                      </div>
-                      <div className="h-5 w-6 ml-6 mt-7 ">
-                          <img src="Downarrow.png" alt="arrow" className="pl-2 pr-2 pt-2 "/>
-                      </div>
+                  <div className="w-52 h-full ml-72 rounded-xl pb-2 bg-today mb-3  flex ...">
+                      <DateDrop/>
+                      
                   </div>
               </div>
               <hr className="mt-4 mb-4 w-98 "/>
@@ -324,4 +320,4 @@ function Login() {
     </div>
   )
 }
-export default Login
+export default Login;

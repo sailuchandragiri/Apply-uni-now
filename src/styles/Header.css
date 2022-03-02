@@ -1,0 +1,24 @@
+.apply {
+  text-align: end;
+  border: 1px solid red;
+  float: right;
+}
+.clear {
+  clear: both;
+}
+
+@media only screen and (max-width: 640px) {
+  .applyMobileView {
+    display: none;
+  }
+  .uninowMobileView {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border: 1px solid red;
+  }
+  .uninowMobileView > img {
+    width: 50%;
+    padding: 0;
+  }
+}

@@ -1,0 +1,99 @@
+.imgDiv {
+  width: 131px;
+  height: 131px;
+  border-radius: 3rem;
+}
+.displayImage{
+  position: relative;
+  z-index: 20;
+}
+.displayImage:hover + .displayImage{
+  visibility: visible;
+  
+}
+
+.displayName{
+  position: absolute;
+  text-align: center;
+  left: 0px;
+  right: 0px;
+  bottom: 15px;
+  z-index: 10;
+/* text-align: center; 
+display: none; */
+}
+
+
+/* .hoverEffect:hover{
+  transform: scale(-1);
+} */
+
+@media only screen and (max-width: 1500px) {
+  .imgDiv {
+    width: 110px;
+    height: 110px;
+    border-radius: 2.6rem;
+  }
+}
+@media only screen and (max-width: 1300px) {
+  .imgDiv {
+    width: 95px;
+    height: 95px;
+    border-radius: 2.2rem;
+  }
+}
+@media only screen and (max-width: 1100px) {
+  .imgDiv {
+    width: 75px;
+    height: 75px;
+    border-radius: 1.8rem;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .imgDiv {
+    width: 60px;
+    height: 60px;
+    border-radius: 1.5rem;
+  }
+}
+@media only screen and (max-width: 750px) {
+  .imgDiv {
+    width: 50px;
+    height: 50px;
+    border-radius: 1.2rem;
+  }
+}
+@media only screen and (max-width: 640px) {
+  .mobileView {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+  .mobileView  img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1.1rem;
+    border-radius: 2.3rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  .child:last-child {
+    display: none;
+  }
+}
+@media only screen and (max-width: 400px) {
+  .mobileView {
+    display: grid;
+    grid-template-columns: auto auto auto;
+  }
+  .mobileView img {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 1.1rem;
+    border-radius: 2.1rem;
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+  }
+  .child:last-child {
+    display: none;
+  }
+}

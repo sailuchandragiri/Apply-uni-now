@@ -5,12 +5,13 @@ import Login from './components/Login';
 import { Switch, Route } from "react-router-dom";
 import Dropdown from "./components/Dropdown";
 import Modal from "./components/Modal";
+import DateDrop from "./components/DateDrop";
 
 
 
 function App() {
   return (
-    <div className='main'>
+    <div className='main bgg'>
      <Switch>
         <Route exact path="/">
           <Login/>
@@ -19,8 +20,6 @@ function App() {
           <Admin/>
         </Route>
      </Switch>   
-    
-    
       
     </div>
   );
