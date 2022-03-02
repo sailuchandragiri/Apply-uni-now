@@ -36,7 +36,7 @@ function Admin() {
 
 
   return (
-    <div>
+    <div className="bgg">
       <div className=" flex justify-center sm:flex sm:flex-row-reverse sm:justify-start sm:mr-60">
         <img
           className="w-1/2  pt-24 sm:w-60 sm:mr-4"

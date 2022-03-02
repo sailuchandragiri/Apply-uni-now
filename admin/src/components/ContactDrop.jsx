@@ -14,8 +14,8 @@ const ContactDrop = () => {
   return (
     <Menu as="div" className="relative float-right  inline-block text-left">
       <div>
-        <Menu.Button className="inline-flex bg-sidenav  w-full rounded-md  rounded-lg  text-sm font-medium text-gray-700 ">
-          <div className="h-12 bg-sidenav pt-2 pb-2 w-28 ">
+        <Menu.Button className="inline-flex bg-sidenav  w-full   rounded-xl text-sm font-medium text-gray-700 ">
+          <div className="h-12 bg-sidenav rounded-lg pt-2 pb-2 w-28 ">
             <div className="h-1/2 w-full  text-xs pr-10 text-gray-500">
               Status
             </div>
@@ -23,7 +23,7 @@ const ContactDrop = () => {
           </div>
           
           <ChevronDownIcon
-            className=" ml-2 text-white h-5 mt-6 mr-8 w-5"
+            className=" ml-2 text-white h-5 mt-6 mr-4 w-5"
             aria-hidden="true"
           />
         </Menu.Button>

@@ -12,7 +12,7 @@ import ContactDrop from './components/ContactDrop';
 
 function App() {
   return (
-    <div className='main bgg'>
+    <div className='main'>
      <Switch>
         <Route exact path="/">
           <Login/>

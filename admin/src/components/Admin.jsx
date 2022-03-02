@@ -176,7 +176,7 @@ function Login() {
                     <img src="not_contacted.png" alt="contacted"/>
                 </div> 
                 )
-       }
+                }
                 {/* <div className="h-full w-24 ml-2  pt-3 ">
                     <img src="contacted.png" alt="contacted"/>
                 </div> */}
@@ -230,7 +230,7 @@ function Login() {
                   <div className="w-60 h-full mr-96 ml-2">
                       <img src="Leads Analytics.png" alt="lead name" className="mt-6"/>
                   </div>
-                  <div className="w-52 h-full ml-72 rounded-xl pb-2 bg-today mb-3  flex ...">
+                  <div className="w-52 h-full ml-72 rounded-xl pb-2  mb-3  flex ...">
                       <DateDrop/>
                       
                   </div>
@@ -261,7 +261,7 @@ function Login() {
               </div>
               <hr className="mt-4 mb-4 w-98"/>  
               <div className=" w-94 h-18 pb-5 rounded-2xl ml-2 pt-6  border-2 border-neutral-500 bg-leadsback mb-4 flex-row flex ...">
-                  <div className="h-12 w-40 ml-9 rounded-xl bg-leadsearch  flex ...">
+                  <div className="h-12 w-40 ml-9 rounded-xl bg-leadsearch  mr-2 flex ...">
                       <div className="h-full pt-2 pl-2 pb-2 w-28 ">
                           <div className="h-1/2 w-full  text-xs  pl-3 text-gray-500">Date Range</div>
                           <div className="h-1/2 w-full text-white text-sm  pl-3 ">All</div>
@@ -270,7 +270,7 @@ function Login() {
                           <img src="Calender.png" alt="calender" className="ml-3 mt-4" />
                            </div>
                   </div>
-                  <div className=" w-40 ml-2 rounded-xl mr-3 bg-leadsearch flex ...">
+                  <div className=" w-40 ml-2 rounded-xl  flex ...">
                      <ContactDrop/> 
                   </div>
                   <div className="h-12 w-80 ml-2 mr-20 rounded-xl bg-leadsearch flex ..." >
