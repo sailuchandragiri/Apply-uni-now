@@ -1,93 +1,327 @@
-import React from "react";
-import { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
+import React, {useEffect, useState } from 'react'
+import './Login.css'
+import Dropdown from "./Dropdown";
 
-function Admin() {
- const  history=useHistory();
-  const [email, setemail] = useState(true);
-  const [password, setpassword] = useState(true);
-  const [token, setToken] = useState("");
+import ReactPaginate from "react-paginate";
+import Calendar from "react-calendar";
+import 'react-calendar/dist/Calendar.css';
+import axios from 'axios'
 
 
+function Login() {
+        
+        const [pagenumber, setPaganumber] = useState(0);
+        const [list, setList] = useState([]);
+        const [users, setUsers] = useState(list.slice(0,30));
+        const [dup,setdup] = useState([]);
+        const [contacted, setContacted] = useState([]);
+
+        const token = localStorage.getItem("token");
+        console.log("after login",token);
+
+       
+        
+        
   
 
-  const getToken = async () => {
-    try {
-      const { data } = await axios.post(
-        "https://dev-test-api.scube.me/login",{
-          email:email,
-          password:password
+        useEffect(() => {
+             getData();
+        }, []);
+
+
+        // useEffect(()=>{
+        //     getContacted();
+        // },[]);
+
+        const getData = async () => {
+
+            
+            const data = await axios.get(
+              "https://dev-test-api.scube.me/admin/contact-requests/?page=1",
+              {
+                headers: {
+                  "Authorization": `Bearer ${token}`,
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            try {
+              console.log(data.data.data.data);
+              setList(data.data.data.data);
+              setdup(data.data.data.meta)
+              //setCategoryData(data.data.data.items);
+            } catch (error) {
+              console.log(error);
+            }
+          
+          };
+
+          const getContacted = async () => {
+
+            
+            const data = await axios.get(
+              "https://dev-test-api.scube.me/admin/contact-requests/statistics",
+              {
+                headers: {
+                  "Authorization": `Bearer ${token}`,
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            try {
+              console.log(data.data.data.contacted);
+              // console.log(data.data.data.contacted);
+              // console.log(data.data.data.not_contacted);
+              setContacted(data.data.data);
+            } catch (error) {
+              console.log(error);
+            }
+          
+          };
+
+          
+
+          useEffect(()=>{
+            getContacted();
+        },[]);
+
+
+          
+          console.log(dup.next_page_url);
+          const nextData = async() =>{
+            const data = await axios.get(
+                `https://dev-test-api.scube.me/admin/contact-requests${dup.next_page_url}`,
+                {
+                  headers: {
+                    "Authorization": `Bearer ${token}`,
+                    Accept: "application/json",
+                    "Content-Type": "application/json",     
+                  },
+                }
+              );
+              try {
+                console.log(data.data.data.data);
+                setList(data.data.data.data);
+                setdup(data.data.data.meta);
+                //setCategoryData(data.data.data.items);
+              } catch (error) {
+                console.log(error);
+              }
+          }
+
+          console.log(dup.previous_page_url);
+
+          const prevData = async() =>{
+            const data = await axios.get(
+                `https://dev-test-api.scube.me/admin/contact-requests${dup.previous_page_url}`,
+                {
+                  headers: {
+                    "Authorization": `Bearer ${token}`,
+                    Accept: "application/json",
+                    "Content-Type": "application/json",     
+                  },
+                }
+              );
+              try {
+                console.log(data.data.data.data);
+                setList(data.data.data.data);
+                //setCategoryData(data.data.data.items);
+              } catch (error) {
+                console.log(error);
+              }
+          }
+
+
+        //calender
+        const [value, onChange] = useState(new Date());
+        
+
+        //for search funtionality
+        const  [searchTerm, setSearchTerm] = useState(''); 
+
+        const usersperpage = 6;
+        const pagesvisited = pagenumber * usersperpage;
+
+        
+       const displayusers= list
+       .filter((val) => {
+             if(searchTerm === ""){
+                 return val;
+              }else if(val.name.includes(searchTerm)){
+                 return val;
+              }
+        })
+       .map((data)=>{
+            return(
+                <div className="h-14 w-98 ml-4 rounded-xl mt-3 bg-background flex ...">
+                     
+                <div className="h-full w-7 ml-2  pl-1 text-white text-xs pt-5">{data.id}</div>
+                <div className="h-full w-24 ml-4   text-white text-xs pt-5">{data.intake}</div>
+                <div className="h-full w-36 ml-2  pt-5 text-white text-xs">{data.name}</div>
+                <div className="h-full w-32 ml-2  pt-5 text-white text-xs">{data.phone}</div>
+                <div className="h-full w-48 ml-2  pt-5 text-white text-xs">{data.email}</div>
+                <div className="h-full w-24 ml-2  pt-5 text-white text-xs">{data.destination}</div>
+                <div className="h-full w-24 ml-2  pt-5 text-white text-xs">{data.industry}</div>
+                <div className="h-full w-20 ml-2  pt-5 text-white text-xs">{data.intake}</div>
+                <div className="h-full w-24 ml-2  pt-3 ">
+                    <img src="contacted.png" alt="contacted"/>
+                </div>
+                <div className="h-full w-14 ml-8  pt-5">
+                    <img src="Peop.png" alt="activate"/>
+                </div>
+            </div>
+            );
+        });
+
+        const pageCount = Math.ceil(users.length/usersperpage);
+
+        const changePage = ({selected})=>{
+            setPaganumber(selected);
         }
-      );
-      setToken(data.data.token.token);
-      history.push("/login");
-      //handleToken(data.data.token.token);
-      console.log(data.data.token.token);
-
-      localStorage.setItem("token", data.data.token.token);
-      // sets the value of "message" to be "saved in browser storage"
-
-      localStorage.setItem("user",data.data.email);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
 
   return (
-    <div>
-      <div className=" flex justify-center sm:flex sm:flex-row-reverse sm:justify-start sm:mr-60">
-        <img
-          className="w-1/2  pt-24 sm:w-60 sm:mr-4"
-          src="Group.png"
-          alt="logo"
-        />
-      </div>
 
-      <div className="flex justify-center mx-4 sm:flex sm:flex-row-reverse sm:justify-start sm:mr-44">
-        <img className="w-96 sm:w-96 sm:mr-4" src="apply.png" alt="png" />
-      </div>
-
-      <div className="flex mx-auto sm:flex sm:flex-row-reverse sm:mr-44">
-        <p className="text-white w-96 ml-4 sm:w-96 sm:mr-4">
-          Please login to your Admin Panel.
-        </p>
-      </div>
-      <form>
-        <div className="flex mt-4 br-b border-white mx-auto sm:flex sm:flex-row-reverse sm:mr-44">
-          <input
-            type="email"
-            placeholder="Email"
-            className=" mt-4 text-black w-96 mx-4 text-xl sm:w-96 outline-none pl-2"
-            onChange={(e)=>{setemail(e.target.value)}}
-            required
-          />
+    //code for top navbar
+   <div className="w-full h-full mt-5 flex ...">
+        <div className="w-1/4 h-full bg-sidenav flex-col flex ..." >
+            <div className="w-full h-24  mt-11 ">
+                <div className="w-56 ml-2 h-full">
+                    <img src="Groupname.png" alt="name"></img>
+                </div>
+                <div className="w-full h-11 bg-white pl-2">
+                    <div className="w-66 h-full bg-leads pt-3">
+                        <div className="w-5 ml-20  h-5 flex-row flex ...">
+                            <img className="w-full h-full" src="Vector.png" alt="people_icon"></img>
+                            <div className="text-white ml-3 text-bold">Leads</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="w-full h-16  mt-80"></div>
+            <div className="w-full h-16  mt-80"></div>
+            <div className="w-full h-9 mt-40  ">
+                <img src="Footer.png" alt="name" className="w-full h-full pl-14 pr-14 pt-3 pb-3" />
+            </div>
+            
         </div>
 
-        <div className="flex mx-auto sm:flex sm:flex-row-reverse sm:mr-44">
-          <input
-            type="password"
-            placeholder="password"
-            className="mt-4 text-black text-xl w-96 mx-4  sm:w-96 outline-none pl-2"
-            onChange={(e)=>{setpassword(e.target.value)}}
-          />
-        </div>
-        <div className="flex mx-auto sm:flex sm:flex-row-reverse sm:mr-72">
-          <Link to="/login">
-            <button className="w-36 h-8 rounded-md mr-4 ml-28 mt-10 bg-blue-500 text-white text-xl "
-            onClick={(e)=>{
-              e.preventDefault();
-              getToken()
-            }}
-            >
-              Login
-            </button>
-          </Link>
-        </div>
-      </form>
+        
+        <div className="w-full h-full flex-col flex ...">
+            {/* code for alaytics */}
+          <div className="w-full h-16 bg-sidenav ">
+            <Dropdown/>
+          </div>
+          <div className="w-full h-11/12 bg-background pl-5 pr-5 pt-5">
+              <div className="w-full h-14  flex ...">
+                  <div className="w-60 h-full mr-96 ml-2">
+                      <img src="Leads Analytics.png" alt="lead name" className="mt-6"/>
+                  </div>
+                  <div className="w-52 h-full ml-72 rounded-xl pb-2 bg-today  flex ...">
+                      <div className="h-full w-36  flex-col   flex ...">
+                          <div className="h-1/2 w-full text-xs pt-3 text-gray-500 ml-7">Date Range </div>
+                          <div className="h-1/2 w-full  text-white text-lg ml-7">Today</div>
+                      </div>
+                      <div className="h-5 w-6 ml-6 mt-7 ">
+                          <img src="Downarrow.png" alt="arrow" className="pl-2 pr-2 pt-2 "/>
+                      </div>
+                  </div>
+              </div>
+              <hr className="mt-4 mb-4 w-98 "/>
+
+              {/* code for leads */}
+              <div className=" w-full h-40  flex-col flex ...">
+                  <div className="w-96 h-24 rounded-2xl bg-analy flex ...">
+                      <div className="h-full w-20 ml-4  flex-col flex ...">
+                          <div className="w-full h-16 mt-5  text-5xl text-green-300">{contacted.total_contacts}</div>
+                          <div className="w-full h-8 text-white text-sm  ml-1">Total Leads </div>
+                      </div>
+                      <div className="h-full w-64 ml-9   flex ...">
+                          <div className="h-full w-1/2 pl-5 flex-col flex ...">
+                              <div className="h-1/4 w-full text-sm mt-4 text-slate-300 ">Uncontacted</div>
+                              <div className="h-full w-full text-xl text-white text-bold mt-4">{contacted.not_contacted}</div>
+                          </div>
+                          <div className="h-full w-1/2">
+                                <div className="h-1/4 w-full text-sm mt-4 text-slate-300 ">Contacted</div>
+                              <div className="h-full w-full text-xl text-white text-bold mt-3">{contacted.contacted}</div>
+                          </div>
+                      </div>
+                  </div>
+                  <div className="w-52 h-16 ml-2 ">
+                      <img src="All Leads (1).png" alt="all leads" className="mt-8 pt-1"/>
+                    </div>
+              </div>
+              <hr className="mt-4 mb-4 w-98"/>  
+              <div className=" w-94 h-24 rounded-2xl ml-2 pt-6  border-2 border-neutral-500 bg-leadsback mb-4 flex-row flex ...">
+                  <div className="h-12 w-40 ml-9 rounded-xl bg-leadsearch  flex ...">
+                      <div className="h-full pt-2 pl-2 pb-2 w-28 ">
+                          <div className="h-1/2 w-full  text-xs  pl-3 text-gray-500">Date Range</div>
+                          <div className="h-1/2 w-full text-white text-sm  pl-3 ">All</div>
+                      </div>
+                      <div className="h-full w-11">
+                          <img src="Calender.png" alt="calender" className="ml-3 mt-4" />
+                           </div>
+                  </div>
+                  <div className="h-12 w-40 ml-2 rounded-xl bg-leadsearch flex ...">
+                    <div className="h-full pt-2 pl-2 pb-2 w-28 ">
+                          <div className="h-1/2 w-full  text-xs  pl-3 text-gray-500">Status</div>
+                          <div className="h-1/2 w-full text-white text-sm  pl-3 ">All</div>
+                      </div>
+                      <div className="h-full w-11">
+                      {/* <Calendar onChange={onChange} value={value} /> */}
+                          <img src="Calender.png" alt="calender" className="ml-3 mt-4" />
+                          
+                    </div>
+                  </div>
+                  <div className="h-12 w-80 ml-2 mr-20 rounded-xl bg-leadsearch flex ..." >
+                      <img src="Search.png" alt="searchicon" className="pt-4 pl-4 pb-4"/>
+                      <input placeholder="Search..." type="text" onChange={event => {setSearchTerm(event.target.value)}} className="ml-2  text-white text-sm bg-leadsearch outline-none"/>
+                  </div>
+                  <div className="h-12 w-28 ml-40 rounded-xl">
+                      <img src="filled button.png" alt="button" className="mt-1 ml-1"/>
+                  </div>
+                  <div className="h-12 w-20 ml-1 rounded-xl text-white pl-4 text-xs pt-4 underline underline-offset-1 ...">Reset</div>
+              </div>
+              <div className="text-white text-xs ml-16 mb-2">Showing {usersperpage+pagesvisited} out of {users.length} Results. </div>
+
+              {/* code for list of contacts */}
+              
+              <div className="h-1/2 w-full pt-5  pr-3 rounded-2xl bg-list mb-2">
+                  <div className="h-16 w-98 ml-4 pt-4 flex ...">
+                  <div className="h-full w-10 ml-2  pl-1 text-gray-400 text-xs pt-5">Sl. No</div>
+                        <div className="h-full w-24 ml-2 text-gray-400 text-xs pt-5">Date</div>
+                        <div className="h-full w-36 ml-2  pt-5 text-gray-400 text-xs">Lead Name</div>
+                        <div className="h-full w-32 pt-5 text-gray-400 text-xs">Phone number</div>
+                        <div className="h-full w-48 ml-3 pt-5 text-gray-400 text-xs">Email</div>
+                        <div className="h-full w-24 pt-5 text-gray-400 text-xs">Study Destination</div>
+                        <div className="h-full w-24 ml-3  pt-5 text-gray-400 text-xs">Level of Study</div>
+                        <div className="h-full w-20 ml-3  pt-5 text-gray-400 text-xs">Intake</div>
+                        <div className="h-full w-24 ml-4  mt-4 text-gray-400 text-xs ">Status</div>
+                        <div className="h-full w-14 ml-4  pt-5 text-gray-400 text-xs">Action</div> 
+                  </div>
+                  
+                  <div>{displayusers}</div>
+              </div>
+            <ReactPaginate className="w-1/4   h-12 mt-8 flex ..."
+            previousLabel={<div className=" mt-3 ml-96 mr-3">
+                <img src="l arrow.png" alt="backarrow" onClick={prevData} className="ml-14" />
+            </div>}
+            nextLabel={<div className="mt-3 ml-3">
+                <img src="arrow.png" alt="front arrow" onClick={nextData}/>
+            </div>}
+             
+             pageCount={pageCount} className="new"
+             onPageChange={changePage}
+             containerClassName={"paginationBttns"}
+             previousLinkClassName={"previousBttn"}
+             nextLinkClassName={"nextBttn"}
+             disabledClassName={"paginationDisabled"}
+             activeClassName={"paginationActive"}
+            />
+          </div>
+        </div> 
     </div>
-  );
+  )
 }
-
-export default Admin;
+export default Login

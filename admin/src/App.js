@@ -13,10 +13,10 @@ function App() {
     <div className='main'>
      <Switch>
         <Route exact path="/">
-          <Admin/>
+          <Login/>
         </Route>
         <Route exact path="/login">
-          <Login/>
+          <Admin/>
         </Route>
      </Switch>   
     
