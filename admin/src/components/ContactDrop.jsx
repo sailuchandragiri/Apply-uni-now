@@ -16,7 +16,7 @@ const ContactDrop = () => {
       <div>
         <Menu.Button className="inline-flex bg-sidenav  w-full   rounded-xl text-sm font-medium text-gray-700 ">
           <div className="h-12 bg-sidenav rounded-lg pt-2 pb-2 w-28 ">
-            <div className="h-1/2 w-full  text-xs pr-10 text-gray-500">
+            <div className="h-1/2 w-full  text-xs pr-10 text-date">
               Status
             </div>
             <div className="h-1/2 w-full pr-16 text-white text-sm   ">All</div>

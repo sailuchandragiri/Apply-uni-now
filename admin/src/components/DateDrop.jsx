@@ -15,14 +15,14 @@ const DateDrop=()=> {
     <Menu as="div" className="relative float-right  inline-block text-left">
       <div>
         <Menu.Button className="inline-flex  w-full rounded-md  bg-sidenav text-sm font-medium text-gray-700 ">
-          <div className="h-10 w-18  flex-col mr-16   flex">
-            <div className="h-1/2 w-full text-xs pt-3 text-gray-500 ml-7">
+          <div className="h-10 w-18  flex-col mr-12 flex">
+            <div className="h-1/2 text-left w-full text-xs pt-1 text-gray-500 ml-7">
               Date Range{" "}
             </div>
-            <div className="h-1/2 w-full  text-white text-lg ml-7">Today</div>
+            <div className="h-1/2 w-full text-left  text-white text-lg ml-7">Today</div>
             
           </div>
-          <ChevronDownIcon className=" ml-2 text-white h-5 mt-7 mr-8 w-5" aria-hidden="true" />
+          <ChevronDownIcon className="  text-white h-5 mt-7 mr-8 w-5" aria-hidden="true" />
 
         </Menu.Button>
       </div>

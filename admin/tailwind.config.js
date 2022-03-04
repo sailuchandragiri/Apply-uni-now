@@ -10,7 +10,9 @@ module.exports = {
         leads:'#444758',
         analy:'#262938',
         leadsback:'#1A1E2E',
-        leadsearch:'#2F3344'
+        leadsearch:'#2F3344',
+        date:'#CECECE',
+        font:'#6A6A78'
       }
     },
   },
