@@ -2,7 +2,8 @@ import React,{useContext} from "react";
 import { useState} from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import {AuthContext} from "./Context/AuthContext"
+import {AuthContext} from "./Context/AuthContext";
+import {AppContext} from "./Context/AuthContext"
 
 
 
@@ -15,10 +16,9 @@ function Loginpage() {
   const [email, setemail] = useState(true);
   const [password, setpassword] = useState(true);
   const [token, setToken] = useState("");
+  const {handleToken} = useContext(AppContext);
 
-
-  const {oken}=useContext(AuthContext);
-  console.log(oken);
+  
 
   const getToken = async () => {
     try {
@@ -29,6 +29,7 @@ function Loginpage() {
         }
       );
       setToken(data.data.token.token);
+      handleToken(data.data.token.token);
       
       history.push("/login");
 
@@ -36,10 +37,10 @@ function Loginpage() {
       console.log(data.data.token.token);
       
 
-      localStorage.setItem("token", data.data.token.token);
-      // sets the value of "message" to be "saved in browser storage"
+      // localStorage.setItem("token", data.data.token.token);
+      // // sets the value of "message" to be "saved in browser storage"
 
-      localStorage.setItem("user",data.data.email);
+      // localStorage.setItem("user",data.data.email);
     } catch (error) {
       console.log(error);
     }
